@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aman Digital – Prototipe Media Informatika Kelas VIII</title>
+<style>
+:root{--bg:#f2f7f3;--card:#fff;--ink:#17302a;--mut:#5a7168;--pri:#1f6b4f;--on:#fff;--pri2:#dcefe5;--acc:#f0b429;--ok:#1a7f4b;--bad:#c23b3b;--line:#cfe0d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c17;--card:#17291f;--ink:#e5f1ea;--mut:#9cb5a8;--pri:#5fd09b;--on:#0f1c17;--pri2:#173a2b;--ok:#52d28c;--bad:#ff7b7b;--line:#2b4639}}
+:root[data-theme="dark"]{--bg:#0f1c17;--card:#17291f;--ink:#e5f1ea;--mut:#9cb5a8;--pri:#5fd09b;--on:#0f1c17;--pri2:#173a2b;--ok:#52d28c;--bad:#ff7b7b;--line:#2b4639}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Trebuchet MS","Segoe UI",Verdana,sans-serif}
+header{background:var(--pri2);border-bottom:1px solid var(--line);padding:12px 16px}
+header div,main,footer{max-width:720px;margin:auto}
+header b{font:700 22px Georgia,"Times New Roman",serif;display:block}
+header small{color:var(--mut)}
+nav{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:10px;font:inherit;font-size:14px;cursor:pointer;min-height:44px}
+main{padding:16px}
+h2{font:700 24px Georgia,serif;margin:4px 0 8px}h3{margin:16px 0 8px;font-size:17px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0}
+.big{font-size:18px}.mut{color:var(--mut);font-size:14px}
+.tp{display:inline-block;background:var(--pri2);color:var(--pri);padding:2px 10px;border-radius:99px;font-size:13px;margin:0}
+.btn{background:var(--pri);color:var(--on);border:0;padding:12px 20px;border-radius:10px;font:inherit;cursor:pointer;margin:8px 6px 0 0;min-height:44px}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+button:focus-visible,input:focus,textarea:focus{outline:3px solid var(--acc);outline-offset:1px}
+.row{display:flex;flex-wrap:wrap}
+.grid{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+.mod{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;font:inherit;cursor:pointer;min-height:44px}
+.mod span:last-child{color:var(--mut);font-size:14px}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:12px 14px;border-radius:12px;margin:8px 0;font:inherit;cursor:pointer;min-height:44px}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{border-color:var(--ok)}.opt.ok::after{content:"  ✓"}
+.opt.no{border-color:var(--bad)}.opt.no::after{content:"  ✗"}
+.fb{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--pri2)}
+input[type=text],textarea{width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+textarea{min-height:60px;margin:4px 0 12px}label{display:block;font-size:15px}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin:12px 0 6px}
+.bar i{display:block;height:100%;width:0;background:var(--bad);transition:width .3s,background .3s}
+ul.chk{list-style:none;padding:0;margin:8px 0}ul.chk li{color:var(--mut)}ul.chk li.y{color:var(--ok)}
+ul.chk li::before{content:"○  "}ul.chk li.y::before{content:"●  "}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 16px;border-radius:10px;font:inherit;cursor:pointer;min-height:44px}
+.tabs button.on{background:var(--pri);color:var(--on);border-color:var(--pri)}
+.pts{padding-left:20px;margin:6px 0}.pts li{margin:8px 0;font-size:18px}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:8px 16px 28px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div><b>Aman Digital</b><small>Informatika · Kelas VIII · Prototipe media web</small>
+<nav><button onclick="go('home')">Beranda</button><button onclick="go('map')">Peta Belajar</button><button onclick="go('mandiri')">Mode Mandiri</button></nav></div></header>
+<main id="app"></main>
+<footer>Prototipe untuk tugas Teknologi Pembelajaran · dibuat dengan bantuan AI · semua kasus fiktif, tidak ada data yang disimpan</footer>
+<script>
+const $=s=>document.querySelector(s),app=$("#app"),done={};
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function view(h){app.innerHTML=h;window.scrollTo(0,0)}
+function go(w){({home:home,map:map,mandiri:mandiri})[w]()}
+const Z=["Publik","Terbatas","Privat"],D=["Aman","Waspada","Mencurigakan"];
+const SETS={
+bima:[{q:"Bima memakai WiFi gratis tanpa sandi di pusat belanja, lalu login ke akun game. Beberapa jam kemudian akunnya diambil alih orang lain. Apa penyebab yang paling mungkin?",o:["Data di WiFi terbuka bisa disadap atau jaringannya palsu","Game-nya sedang diperbarui","Baterai HP-nya lemah"],k:0,f:"Jaringan terbuka tidak melindungi data, dan jaringan bernama mirip bisa jadi palsu."},
+{q:"Apa saran terbaik untuk Bima?",o:["Ganti sandi, keluar dari semua perangkat, dan hindari login penting di WiFi publik","Memakai sandi yang sama di semua akun","Mematikan HP seharian"],k:0,f:"Untuk hal penting, gunakan data seluler."}],
+detektif:[{q:"SMS: “SELAMAT! Nomor Anda terpilih memenangkan Rp5.000.000. Klik tautan pendek ini dan isi data diri dalam 1 jam.”",o:D,k:2,f:"Hadiah tak diminta, tautan pendek, batas waktu, dan meminta data diri."},
+{q:"WhatsApp dari “Admin Game”: “Akunmu akan diblokir! Kirim kode OTP yang masuk ke HP-mu untuk verifikasi.”",o:D,k:2,f:"Mengancam dan meminta kode OTP yang rahasia."},
+{q:"Pesan wali kelas di grup kelas: “Ulangan Informatika hari Rabu, bawa alat tulis.” (tanpa tautan)",o:D,k:0,f:"Pengirim jelas, tanpa tautan, tidak meminta data. Tidak semua pesan berbahaya."},
+{q:"Pesan dari teman: “Bantu vote lomba aku dong, klik link ini.” (tautan aneh, gaya bahasa tidak biasa)",o:D,k:1,f:"Akun teman mungkin diretas. Konfirmasi lewat cara lain sebelum mengklik."},
+{q:"Pop-up di layar: “Komputermu terkena 5 virus! Unduh aplikasi pembersih sekarang.”",o:D,k:2,f:"Menakut-nakuti dan memaksa mengunduh (scareware)."},
+{q:"Notifikasi layanan: “Ada login baru dari perangkat tak dikenal. Jika bukan kamu, buka aplikasi resmi dan ganti kata sandi.” (tanpa tautan)",o:D,k:0,f:"Menyuruh membuka aplikasi resmi sendiri dan tidak meminta sandi lewat pesan."}],
+bagikan:[{q:"Alamat rumah",o:Z,k:2,f:"Privat."},{q:"Kata sandi akun",o:Z,k:2,f:"Privat."},{q:"Gambar karya sendiri yang ingin kamu pamerkan",o:Z,k:0,f:"Publik bila memang ingin dipamerkan."},
+{q:"Foto berseragam dengan nama sekolah terlihat jelas",o:Z,k:1,f:"Terbatas: mengungkap tempat kamu beraktivitas."},{q:"Nomor HP",o:Z,k:1,f:"Terbatas: boleh untuk guru atau wali kelas, tidak untuk orang asing."},{q:"Nomor kartu keluarga atau nomor identitas",o:Z,k:2,f:"Privat."}],
+dimas:[{q:"Dimas mengunggah foto berseragam dengan nama sekolah terlihat, menulis nomor HP di keterangan, mengaktifkan lokasi, dan akunnya publik. Apa risiko utamanya?",o:["Orang asing bisa mengetahui sekolah, kontak, dan lokasinya","Fotonya jadi kurang bagus","Kuotanya cepat habis"],k:0,f:"Bisa berujung penipuan atau pembuntutan."},
+{q:"Foto itu sudah dihapus. Mengapa lima tahun lagi masih bisa ditemukan?",o:["Mungkin sudah disalin atau ditangkap layar orang lain","Internet lupa menghapusnya","Akun Dimas pasti dibajak"],k:0,f:"Itulah rekam jejak digital: sulit dihapus sepenuhnya."},
+{q:"Aturan “Sebelum Aku Mengunggah” yang paling tepat?",o:["Perlu dibagikan? Siapa yang bisa melihat? Aman sekarang dan nanti?","Unggah dulu, pikir belakangan","Tambahkan lokasi agar mudah ditemukan teman"],k:0,f:"Tiga pertanyaan ini dibahas pada modul."}]};
+const MOD=[
+{n:"Jaringan Aman",tp:"TP 2.7",seg:["Jaringan lokal menghubungkan perangkat di satu tempat, misalnya komputer di lab. Internet menghubungkan jutaan jaringan.","Kabel umumnya lebih stabil tetapi kurang praktis. WiFi praktis, tetapi sinyalnya bisa dijangkau siapa saja di sekitarnya.","WiFi publik tanpa sandi mudah disalahgunakan. Gembok HTTPS berarti koneksi terenkripsi, bukan jaminan situs jujur."],lat:"bima",ln:"Kasus Bima",quiz:[["Tanda gembok HTTPS berarti …",["Koneksi terenkripsi, tetapi tetap perlu waspada","Situs pasti jujur","Situs bebas iklan"]],["Saat memakai WiFi publik tanpa sandi, tindakan yang tepat adalah …",["Menghindari login atau transaksi penting","Login ke semua akun","Membagikan sandi ke orang sekitar"]]]},
+{n:"Kata Sandi",tp:"TP 2.13",seg:["Semakin panjang semakin baik: usahakan 12 karakter atau lebih. Jangan memuat nama, tanggal lahir, atau nama sekolah.","Frasa sandi adalah beberapa kata acak yang mudah diingat, misalnya “kopi-hujan-sepeda-biru-77” (hanya contoh).","Pakai sandi berbeda untuk tiap akun, jangan dibagikan, dan jangan disimpan di komputer bersama."],lat:"sandi",ln:"Uji Kata Sandi",quiz:[["Contoh sandi yang paling aman adalah …",["kopi-hujan-sepeda-biru-77","andi2010","12345678"]],["Sandi yang sama di banyak akun berbahaya karena …",["Bila satu akun bocor, akun lain ikut mudah dibobol","Sandi cepat kedaluwarsa","WiFi jadi lambat"]]]},
+{n:"Malware dan Phishing",tp:"TP 2.14",seg:["Phishing adalah penipuan yang menyamar sebagai pihak tepercaya. Tandanya: hadiah tak diminta, tautan aneh, mendesak, dan meminta sandi atau OTP.","Malware: virus menempel pada file, worm menyebar sendiri lewat jaringan, trojan menyamar sebagai program berguna, ransomware mengunci file, spyware memata-matai.","Lindungi perangkat: perbarui sistem, aktifkan Windows Security atau antivirus, unduh dari sumber resmi, dan buat cadangan."],lat:"detektif",ln:"Detektif Tautan",quiz:[["Malware yang mengunci file lalu meminta tebusan disebut …",["Ransomware","Adware","Spyware"]],["Langkah yang tepat untuk menjaga perangkat adalah …",["Memperbarui sistem dan mengaktifkan antivirus","Mengunduh aplikasi dari mana saja","Meminjamkan flashdisk ke siapa saja"]]]},
+{n:"Informasi Privat dan Publik",tp:"TP 2.15",seg:["Data pribadi adalah informasi yang dapat mengenali seseorang: nama lengkap, alamat, nomor HP, foto wajah, lokasi, dan data akun.","Kategori bisa bergantung pada konteks. Nomor HP boleh diberikan ke wali kelas, tetapi tidak sebaiknya ke publik."],lat:"bagikan",ln:"Bagikan atau Tahan?",quiz:[["Informasi yang paling berisiko bila dibagikan ke publik adalah …",["Alamat rumah dan lokasi real-time","Hobi","Lagu favorit"]],["Nomor HP sebaiknya diberikan kepada …",["Guru atau wali kelas, bukan ke publik","Siapa saja","Orang asing di kolom komentar"]]]},
+{n:"Data Pribadi dan Identitas Digital",tp:"TP 2.16",seg:["Identitas digital adalah gambaran dirimu di dunia digital: akun, foto, unggahan, dan komentar.","Atur akun menjadi privat, matikan lokasi otomatis, periksa izin aplikasi, dan minta izin sebelum mengunggah foto orang lain.","Bila ada masalah: ganti sandi, keluar dari semua perangkat, simpan bukti, dan lapor ke guru atau orang dewasa tepercaya."],lat:"dimas",ln:"Kasus Dimas",quiz:[["Akunmu login dari perangkat asing. Langkah pertama yang tepat …",["Ganti sandi dan keluar dari semua perangkat","Menunggu dulu","Membalas pelaku"]],["Pesan yang meminta kode OTP berarti …",["Mencurigakan, karena OTP bersifat rahasia","Aman karena mengaku admin","Boleh dibagikan bila mendesak"]]]},
+{n:"Rekam Jejak Digital",tp:"TP 2.10",seg:["Rekam jejak digital adalah seluruh jejak aktivitas online yang tersimpan.","Jejak itu sulit dihapus karena bisa disalin, ditangkap layar, atau disimpan pihak lain. Seperti jejak kaki di pasir basah."],lat:"",ln:"",quiz:[["Rekam jejak digital adalah …",["Jejak aktivitas online yang tersimpan dan sulit dihapus","Daftar kontak di HP","Riwayat nilai ulangan"]],["Pertanyaan yang tepat sebelum mengunggah foto …",["Aman dilihat siapa saja, sekarang maupun nanti?","Filter apa yang paling bagus?","Jam berapa waktu terbaik mengunggah?"]]]}];
+
+function home(){view(`<div class="card"><h2>Belajar aman di dunia digital</h2><p>Enam modul pendek untuk menjaga akun, perangkat, dan data pribadimu. Cocok dikerjakan berpasangan di lab, dan dapat dibuka tanpa internet.</p><h3>Aturan singkat</h3><ul><li>HP hanya dipakai saat guru mengizinkan.</li><li>Jangan mengetik kata sandi aslimu. Pakai contoh.</li><li>Jangan membuka akun atau riwayat milik orang lain.</li></ul><h3>Pilih cara belajar</h3><p class="mut">Ini hanya preferensi dan bisa diubah kapan saja di layar materi. Semua cara menuju tujuan dan kuis yang sama.</p><div class="tabs">${Object.keys(GS).map(k=>`<button class="${gs===k?"on":""}" aria-pressed="${gs===k}" onclick="setGs('${k}')">${GS[k]}</button>`).join("")}</div><button class="btn" onclick="map()">Mulai belajar</button><button class="btn alt" onclick="mandiri()">Mode Mandiri</button></div>`)}
+function map(){const c=i=>`<button class="mod" onclick="materi(${i},0)"><span class="tp">${MOD[i].tp}</span><b>${i+1}. ${MOD[i].n}</b><span>${done[i]?"✓ Selesai":"Belum selesai"}</span></button>`;
+view(`<h2>Peta Belajar</h2><h3>Pertemuan 1</h3><div class="grid">${[0,1,2].map(c).join("")}</div><h3>Pertemuan 2</h3><div class="grid">${[3,4,5].map(c).join("")}</div><p class="mut">Selesai: ${Object.keys(done).length} dari 6 modul</p>`)}
+function materi(i,s){const m=MOD[i],n=m.seg.length;
+view(`<p class="tp">${m.tp} · Modul ${i+1}</p><h2>${m.n}</h2>${cara(i,s)}<div class="row">${s>0?`<button class="btn alt" onclick="materi(${i},${s-1})">Kembali</button>`:""}${s<n-1?`<button class="btn" onclick="materi(${i},${s+1})">Lanjut</button>`:`<button class="btn" onclick="latihan(${i})">${m.lat?"Ke latihan: "+m.ln:"Ke kuis"}</button>`}</div>`)}
+function latihan(i){const m=MOD[i];if(!m.lat)return kuis(i);if(m.lat==="sandi")return sandi(i);
+run(SETS[m.lat],{shuffle:m.lat==="bima"||m.lat==="dimas"},m.ln,()=>kuis(i))}
+function run(S,o,title,after){let i=0,sc=0;
+const draw=()=>{if(i>=S.length){view(`<h2>${title}</h2><div class="card"><p class="big">Skor: ${sc} dari ${S.length}</p><button class="btn" id="nx">Lanjut</button></div>`);$("#nx").onclick=()=>after(sc,S.length);return}
+const it=S[i];let op=it.o.map((t,k)=>({t,k}));if(o.shuffle)op=sh(op);
+view(`<h2>${title}</h2><div class="card"><div class="mut">Soal ${i+1} dari ${S.length}</div><p class="big">${it.q}</p>${op.map(x=>`<button class="opt" data-k="${x.k}">${x.t}</button>`).join("")}<div class="fb" id="fb"></div></div>`);
+document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{document.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.k===it.k)x.classList.add("ok")});
+const good=+b.dataset.k===it.k;if(good)sc++;else b.classList.add("no");
+const f=$("#fb");f.style.display="block";f.innerHTML=`<b>${good?"Tepat.":"Belum tepat."}</b> ${it.f||""}<br><button class="btn" id="n2">${i<S.length-1?"Berikutnya":"Lihat skor"}</button>`;
+$("#n2").onclick=()=>{i++;draw()}})};draw()}
+function kuis(i){const m=MOD[i];
+run(m.quiz.map(q=>({q:q[0],o:q[1],k:0,f:""})),{shuffle:1},"Kuis: "+m.n,(sc,t)=>{const p=Math.round(sc/t*100);if(p>=70)done[i]=1;
+view(`<h2>Hasil kuis</h2><div class="card"><p class="big">Skor ${p}</p><p>${p>=70?"Modul ditandai selesai. Lanjut ke modul berikutnya.":"Skor di bawah 70. Ulangi materi lalu coba kuis lagi."}</p><button class="btn" onclick="map()">Kembali ke Peta Belajar</button>${p<70?`<button class="btn alt" onclick="materi(${i},0)">Ulangi materi</button>`:""}</div>`)})}
+function sandi(i){const R=[["Minimal 12 karakter",p=>p.length>=12],["Tidak memuat nama, tanggal lahir, atau nama sekolah",p=>!!p&&!/andi|budi|smpn|karangpandan|lahir|20[01]\d/i.test(p)],["Bukan pola mudah ditebak (123, qwerty, password)",p=>!!p&&!/123|qwerty|password|sandi/i.test(p)],["Memakai minimal tiga jenis: huruf besar, huruf kecil, angka, tanda hubung atau simbol",p=>[/[A-Z]/,/[a-z]/,/\d/,/[^A-Za-z0-9]/].filter(r=>r.test(p)).length>=3]];
+view(`<h2>Uji Kata Sandi</h2><div class="card"><p><b>Jangan ketik sandi aslimu.</b> Coba contoh seperti <i>andi2010</i>, <i>12345678</i>, atau <i>kopi-hujan-sepeda-biru-77</i>.</p><input type="text" id="pw" autocomplete="off" aria-label="Contoh kata sandi" placeholder="Ketik contoh sandi fiktif"><div class="bar"><i id="pb"></i></div><b id="pl">Belum diisi</b><ul class="chk" id="pc">${R.map(r=>"<li>"+r[0]+"</li>").join("")}</ul><p class="mut">Dua aturan lain: berbeda untuk setiap akun dan tidak dibagikan. Tidak ada yang disimpan.</p><button class="btn" id="go">Lanjut ke kuis</button></div>`);
+$("#go").onclick=()=>kuis(i);
+$("#pw").oninput=e=>{const p=e.target.value;let n=0;[...$("#pc").children].forEach((li,k)=>{const y=R[k][1](p);li.className=y?"y":"";n+=y});const pc=p?Math.round(n/R.length*100):0,b=$("#pb");b.style.width=pc+"%";b.style.background=pc<50?"var(--bad)":pc<100?"var(--acc)":"var(--ok)";$("#pl").textContent=!p?"Belum diisi":pc<50?"Lemah":pc<100?"Cukup":"Kuat"}}
+function mandiri(){view(`<h2>Mode Mandiri</h2><p class="mut">Dipakai saat guru berhalangan hadir.</p><div class="card"><ol><li>Ketua kelas membagikan LKPD dan kartu yang disiapkan guru.</li><li>Kerjakan LKPD Level A atau B secara berkelompok. Bagian praktik lab dilewati dan diganti lembar tangkapan layar cetak.</li><li>Tunjuk satu pencatat untuk menulis hasil diskusi dan pertanyaan yang belum terjawab.</li><li>Kumpulkan LKPD ke guru piket atau guru mapel. Pertanyaan dibahas pada pertemuan berikutnya.</li></ol></div><div class="card"><h3>Lembar refleksi</h3><label>Bagian yang paling kupahami<textarea></textarea></label><label>Bagian yang masih membingungkan<textarea></textarea></label><label>Satu langkah pengamanan yang akan kulakukan (tanpa menulis sandi)<textarea></textarea></label><p class="mut">Jawabanmu tidak disimpan. Catat di buku atau cetak halaman ini.</p></div>`)}
+let gs="baca";const GS={vis:"Gambar",aud:"Dengar",baca:"Baca",kin:"Coba"};
+function setGs(g,i,s){gs=g;if(i===undefined)return home();materi(i,s)}
+function say(i,s){if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(MOD[i].seg[s]);u.lang="id-ID";speechSynthesis.speak(u)}
+function cara(i,s){const m=MOD[i],n=m.seg.length,t=m.seg[s];
+const tabs=`<div class="tabs" role="group" aria-label="Pilih cara belajar">${Object.keys(GS).map(k=>`<button class="${gs===k?"on":""}" aria-pressed="${gs===k}" onclick="setGs('${k}',${i},${s})">${GS[k]}</button>`).join("")}</div>`;
+let b;
+if(gs==="vis")b=`<ul class="pts">${t.split(". ").map(x=>"<li>"+x.replace(/\.$/,"")+"</li>").join("")}</ul>`;
+else if(gs==="aud")b=`<p class="big">${t}</p><button class="btn alt" onclick="say(${i},${s})">🔊 Dengarkan</button><p class="mut">Memakai suara bawaan perangkat. Bila tidak ada suara, minta temanmu membacakannya.</p>`;
+else if(gs==="kin")b=`<p class="big">${t}</p>${m.lat?`<p class="mut">Cara Coba: kerjakan latihan dulu, lalu kembali membaca bila perlu.</p><button class="btn alt" onclick="latihan(${i})">Coba latihan sekarang</button>`:`<p class="mut">Modul ini tidak punya latihan. Lanjut ke kuis di layar terakhir.</p>`}`;
+else b=`<p class="big">${t}</p>`;
+return tabs+`<div class="card"><div class="mut">Layar ${s+1} dari ${n}</div>${b}</div>`}
+home();
+</script>
+</body>
+</html>
